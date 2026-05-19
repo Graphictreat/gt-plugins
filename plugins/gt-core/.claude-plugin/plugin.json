@@ -1,0 +1,9 @@
+{
+  "name": "gt-core",
+  "version": "0.1.0",
+  "description": "Graphictreat team-wide Claude Code skills.",
+  "author": {
+    "name": "Graphictreat",
+    "url": "https://github.com/graphictreat"
+  }
+}

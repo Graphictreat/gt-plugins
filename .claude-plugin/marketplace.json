@@ -1,0 +1,15 @@
+{
+  "name": "graphictreat",
+  "owner": {
+    "name": "Graphictreat",
+    "url": "https://github.com/graphictreat"
+  },
+  "plugins": [
+    {
+      "name": "gt-core",
+      "description": "Graphictreat team-wide Claude Code skills: agent orchestration patterns (fan-out-fan-in, model-chat, pipeline, stochastic-consensus) and x-post-gen.",
+      "source": "./plugins/gt-core",
+      "version": "0.1.0"
+    }
+  ]
+}

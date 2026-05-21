@@ -1,6 +1,6 @@
 # graphictreat/claude-plugins
 
-Private Claude Code plugin marketplace for the Graphictreat team. Hosts the `gt-core` plugin, which bundles our shared team-wide Claude Code skills.
+Private Claude Code plugin marketplace for the Graphictreat team. Hosts the `gt-core` plugin (shared team-wide skills) and `gt-social` (social media content generation).
 
 This repo is **private**. Access requires membership in the `graphictreat` GitHub org.
 
@@ -11,14 +11,18 @@ This repo is **private**. Access requires membership in the `graphictreat` GitHu
 ├── .claude-plugin/
 │   └── marketplace.json       Marketplace catalog — lists available plugins
 ├── plugins/
-│   └── gt-core/
+│   ├── gt-core/
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json    Plugin manifest (name, version, author)
+│   │   └── skills/
+│   │       ├── fan-out-fan-in/SKILL.md
+│   │       ├── model-chat/SKILL.md
+│   │       ├── pipeline/SKILL.md
+│   │       └── stochastic-consensus/SKILL.md
+│   └── gt-social/
 │       ├── .claude-plugin/
-│       │   └── plugin.json    Plugin manifest (name, version, author)
+│       │   └── plugin.json
 │       └── skills/
-│           ├── fan-out-fan-in/SKILL.md
-│           ├── model-chat/SKILL.md
-│           ├── pipeline/SKILL.md
-│           ├── stochastic-consensus/SKILL.md
 │           └── x-post-gen/SKILL.md
 └── README.md
 ```
@@ -26,7 +30,7 @@ This repo is **private**. Access requires membership in the `graphictreat` GitHu
 ## Available skills
 
 <details>
-<summary><strong>gt-core</strong> — shared team-wide skills (5)</summary>
+<summary><strong>gt-core</strong> — shared team-wide skills</summary>
 
 | Skill | Description | Best used for |
 | --- | --- | --- |
@@ -34,6 +38,14 @@ This repo is **private**. Access requires membership in the `graphictreat` GitHu
 | `stochastic-consensus` | Spawns N agents in parallel with slightly different personas, each produces M independent ideas, then aggregates by frequency — high-vote ideas are consensus, single-vote ideas are outliers. | Brainstorming, option generation, ranking, and strategic analysis where you want to filter hallucinations and surface the full search space. |
 | `pipeline` | Sequential specialist handoff — decomposes a task into stages and runs each as a focused subagent with its own clean context (dev → review → test, research → design → implement → QA). | Multi-phase tasks where carrying all prior context into the next phase would degrade quality — "build then test", "design and review". |
 | `model-chat` | Multi-agent debate / shared-room — N agents iterate over R rounds; each round every agent sees all prior responses and refines, challenges, or extends. | Letting ideas evolve under peer pressure rather than just being aggregated — "debate", "discuss", "round-table", "have the models argue". |
+
+</details>
+
+<details>
+<summary><strong>gt-social</strong> — social media content generation</summary>
+
+| Skill | Description | Best used for |
+| --- | --- | --- |
 | `x-post-gen` | Generates a high-engagement, educational X (Twitter) post via a sequential pipeline (brief → draft → playbook critique → polish), encoding a 2026 X playbook with market-specific overlays. | Writing an X post or thread optimized for the algorithm; takes a topic + optional market (b2b-saas / indie / creator / crypto / science / generic) + format (single / thread). |
 
 </details>
@@ -69,15 +81,16 @@ claude plugin marketplace add graphictreat/claude-plugins
 
 This clones the marketplace into `~/.claude/plugins/marketplaces/graphictreat/` using your `gh` credentials.
 
-### 3. Install the `gt-core` plugin
+### 3. Install the plugins you want
 
 Inside Claude Code:
 
 ```
 /plugin install gt-core@graphictreat
+/plugin install gt-social@graphictreat
 ```
 
-That's it. All 5 skills are now available in every Claude Code session on your machine, namespaced as `gt-core:<skill-name>`.
+Skills are now available in every Claude Code session on your machine, namespaced as `gt-core:<skill-name>` and `gt-social:<skill-name>`.
 
 ## Verifying the install
 
@@ -87,7 +100,7 @@ Inside Claude Code:
 /plugin list
 ```
 
-You should see `gt-core` listed as installed and enabled.
+You should see `gt-core` and `gt-social` listed as installed and enabled.
 
 Try invoking a skill:
 
@@ -112,7 +125,7 @@ For safer pinning, point at a git tag instead of `main` by editing your marketpl
 If a particular skill doesn't fit your workflow:
 
 ```
-/plugin disable gt-core:x-post-gen
+/plugin disable gt-social:x-post-gen
 ```
 
 The plugin stays installed; only that skill is hidden.

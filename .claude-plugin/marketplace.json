@@ -7,8 +7,14 @@
   "plugins": [
     {
       "name": "gt-core",
-      "description": "Graphictreat team-wide Claude Code skills: agent orchestration patterns (fan-out-fan-in, model-chat, pipeline, stochastic-consensus) and x-post-gen.",
+      "description": "Graphictreat team-wide Claude Code skills: agent orchestration patterns (fan-out-fan-in, model-chat, pipeline, stochastic-consensus).",
       "source": "./plugins/gt-core",
+      "version": "0.2.0"
+    },
+    {
+      "name": "gt-social",
+      "description": "Graphictreat skills for social media content generation (x-post-gen, with more platforms to come).",
+      "source": "./plugins/gt-social",
       "version": "0.1.0"
     }
   ]

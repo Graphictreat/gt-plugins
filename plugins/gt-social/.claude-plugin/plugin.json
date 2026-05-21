@@ -1,0 +1,9 @@
+{
+  "name": "gt-social",
+  "version": "0.1.0",
+  "description": "Graphictreat skills for social media content generation (X, and more to come).",
+  "author": {
+    "name": "Graphictreat",
+    "url": "https://github.com/graphictreat"
+  }
+}

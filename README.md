@@ -23,6 +23,21 @@ This repo is **private**. Access requires membership in the `graphictreat` GitHu
 └── README.md
 ```
 
+## Available skills
+
+<details>
+<summary><strong>gt-core</strong> — shared team-wide skills (5)</summary>
+
+| Skill | Description | Best used for |
+| --- | --- | --- |
+| `fan-out-fan-in` | Spawns N cheap parallel researcher subagents on different angles of a question, then synthesizes their outputs with one stronger model. | Open-ended research where breadth + speed beat serial depth — "research X", "find best Y", "compare A/B/C", "how should I optimize Z". |
+| `stochastic-consensus` | Spawns N agents in parallel with slightly different personas, each produces M independent ideas, then aggregates by frequency — high-vote ideas are consensus, single-vote ideas are outliers. | Brainstorming, option generation, ranking, and strategic analysis where you want to filter hallucinations and surface the full search space. |
+| `pipeline` | Sequential specialist handoff — decomposes a task into stages and runs each as a focused subagent with its own clean context (dev → review → test, research → design → implement → QA). | Multi-phase tasks where carrying all prior context into the next phase would degrade quality — "build then test", "design and review". |
+| `model-chat` | Multi-agent debate / shared-room — N agents iterate over R rounds; each round every agent sees all prior responses and refines, challenges, or extends. | Letting ideas evolve under peer pressure rather than just being aggregated — "debate", "discuss", "round-table", "have the models argue". |
+| `x-post-gen` | Generates a high-engagement, educational X (Twitter) post via a sequential pipeline (brief → draft → playbook critique → polish), encoding a 2026 X playbook with market-specific overlays. | Writing an X post or thread optimized for the algorithm; takes a topic + optional market (b2b-saas / indie / creator / crypto / science / generic) + format (single / thread). |
+
+</details>
+
 ## Installation
 
 Run these once on each machine.

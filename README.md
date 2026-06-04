@@ -1,6 +1,6 @@
 # graphictreat/claude-plugins
 
-Private Claude Code plugin marketplace for the Graphictreat team. Hosts the `gt-core` plugin (shared team-wide skills) and `gt-social` (social media content generation).
+Private Claude Code plugin marketplace for the Graphictreat team. Hosts the `gt-core` plugin (shared team-wide skills), `gt-engineering` (per-repo engineering workflow), and `gt-social` (social media content generation).
 
 This repo is **private**. Access requires membership in the `graphictreat` GitHub org.
 
@@ -16,9 +16,17 @@ This repo is **private**. Access requires membership in the `graphictreat` GitHu
 │   │   │   └── plugin.json    Plugin manifest (name, version, author)
 │   │   └── skills/
 │   │       ├── fan-out-fan-in/SKILL.md
+│   │       ├── grill-me/SKILL.md
 │   │       ├── model-chat/SKILL.md
 │   │       ├── pipeline/SKILL.md
 │   │       └── stochastic-consensus/SKILL.md
+│   ├── gt-engineering/
+│   │   ├── .claude-plugin/
+│   │   │   └── plugin.json
+│   │   └── setup-gt-dev-skills/
+│   │       ├── SKILL.md
+│   │       ├── issue-tracker-github.md
+│   │       └── triage-labels.md
 │   └── gt-social/
 │       ├── .claude-plugin/
 │       │   └── plugin.json
@@ -38,6 +46,16 @@ This repo is **private**. Access requires membership in the `graphictreat` GitHu
 | `stochastic-consensus` | Spawns N agents in parallel with slightly different personas, each produces M independent ideas, then aggregates by frequency — high-vote ideas are consensus, single-vote ideas are outliers. | Brainstorming, option generation, ranking, and strategic analysis where you want to filter hallucinations and surface the full search space. |
 | `pipeline` | Sequential specialist handoff — decomposes a task into stages and runs each as a focused subagent with its own clean context (dev → review → test, research → design → implement → QA). | Multi-phase tasks where carrying all prior context into the next phase would degrade quality — "build then test", "design and review". |
 | `model-chat` | Multi-agent debate / shared-room — N agents iterate over R rounds; each round every agent sees all prior responses and refines, challenges, or extends. | Letting ideas evolve under peer pressure rather than just being aggregated — "debate", "discuss", "round-table", "have the models argue". |
+| `grill-me` | Interviews the user relentlessly about a plan or design, walking down each branch of the decision tree and resolving dependencies one-by-one. Provides a recommended answer with every question. | Stress-testing a plan or design before implementation — "grill me on this", "poke holes in my approach", aligning on architecture before coding. |
+
+</details>
+
+<details>
+<summary><strong>gt-engineering</strong> — per-repo engineering workflow</summary>
+
+| Skill | Description | Best used for |
+| --- | --- | --- |
+| `setup-gt-dev-skills` | Scaffolds an `## Agent skills` block in `AGENTS.md`/`CLAUDE.md` plus `docs/agents/` so engineering skills know the repo's issue tracker (GitHub or local markdown), triage label vocabulary, and domain doc layout. Slash-invoke only (not auto-triggered). | Bootstrapping a fresh repo to be consumable by the downstream engineering skills, or refreshing those configs when the issue tracker / label vocab changes. |
 
 </details>
 
@@ -87,10 +105,11 @@ Inside Claude Code:
 
 ```
 /plugin install gt-core@graphictreat
+/plugin install gt-engineering@graphictreat
 /plugin install gt-social@graphictreat
 ```
 
-Skills are now available in every Claude Code session on your machine, namespaced as `gt-core:<skill-name>` and `gt-social:<skill-name>`.
+Skills are now available in every Claude Code session on your machine, namespaced as `gt-core:<skill-name>`, `gt-engineering:<skill-name>`, and `gt-social:<skill-name>`.
 
 ## Verifying the install
 
@@ -190,3 +209,29 @@ When a teammate trusts the folder, Claude Code prompts them to install this exac
 - **Skills don't appear after install** — restart Claude Code; structural changes (new skill dirs) require a session restart.
 - **Auto-update silently fails on private repos** — set `GITHUB_TOKEN` in your shell env, or run `/plugin update gt-core` manually.
 - **Skill name collides with a personal skill** — plugin skills are namespaced (`gt-core:foo`) and never collide; if you can't invoke yours by short name, the personal one is shadowed by plugin precedence — invoke explicitly with the full name.
+
+## TODO
+
+Tracking work still needed before this marketplace is feature-complete.
+
+### `gt-engineering`
+
+The plugin is registered and `setup-gt-dev-skills` is wired up, but it's currently incomplete on its own — the scaffolder references templates and downstream skills that don't yet exist.
+
+**Missing seed templates** — `plugins/gt-engineering/setup-gt-dev-skills/SKILL.md` reads from these but they're not on disk:
+
+- [ ] `issue-tracker-local.md` — seed template for the local-markdown issue tracker option (mirrors `issue-tracker-github.md`, but documents the `.local-wip/<feature>/` convention).
+- [ ] `domain.md` — seed template explaining single-context vs multi-context `CONTEXT.md` / ADR layout, and the consumer rules downstream skills follow.
+
+**Missing downstream skills** — `setup-gt-dev-skills` is a scaffolder for skills that don't yet exist in this plugin. Either author them here or remove the references from the setup skill:
+
+- [ ] `to-product-req` — converts a raw idea / bug report into a structured product requirement, then publishes to the configured issue tracker.
+- [ ] `triage` — runs an incoming issue through the five-state triage machine (`needs-triage` → `needs-info` / `ready-for-agent` / `ready-for-human` / `wontfix`) using the label vocabulary from `docs/agents/triage-labels.md`.
+- [ ] `improve-codebase-architecture` — reads `CONTEXT.md` + ADRs and proposes architectural improvements.
+- [ ] `diagnose` — root-cause investigation that uses `CONTEXT.md` for domain language.
+- [ ] `tdd` — TDD loop that consults domain docs before writing tests.
+
+### Housekeeping
+
+- [ ] Tag a release once `gt-engineering` ships (`v0.3.0` for `gt-core` bumping to include `grill-me`, plus the new `gt-engineering` plugin entry).
+- [ ] Consider whether `grill-me` belongs under `gt-engineering` (planning/design context) instead of `gt-core` (orchestration) — it's currently in `gt-core` because it's project-agnostic.

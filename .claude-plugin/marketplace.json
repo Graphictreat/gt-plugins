@@ -7,9 +7,15 @@
   "plugins": [
     {
       "name": "gt-core",
-      "description": "Graphictreat team-wide Claude Code skills: agent orchestration patterns (fan-out-fan-in, model-chat, pipeline, stochastic-consensus).",
+      "description": "Graphictreat team-wide Claude Code skills: agent orchestration patterns (fan-out-fan-in, model-chat, pipeline, stochastic-consensus) and collaboration helpers (grill-me).",
       "source": "./plugins/gt-core",
-      "version": "0.2.0"
+      "version": "0.3.0"
+    },
+    {
+      "name": "gt-engineering",
+      "description": "Graphictreat engineering workflow skills: per-repo setup (setup-gt-dev-skills) for issue tracker, triage label vocabulary, and domain doc layout.",
+      "source": "./plugins/gt-engineering",
+      "version": "0.1.0"
     },
     {
       "name": "gt-social",

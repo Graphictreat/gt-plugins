@@ -23,10 +23,12 @@ This repo is **private**. Access requires membership in the `graphictreat` GitHu
 │   ├── gt-engineering/
 │   │   ├── .claude-plugin/
 │   │   │   └── plugin.json
-│   │   └── setup-gt-dev-skills/
-│   │       ├── SKILL.md
-│   │       ├── issue-tracker-github.md
-│   │       └── triage-labels.md
+│   │   └── skills/
+│   │       └── setup-gt-dev-skills/
+│   │           ├── SKILL.md
+│   │           ├── issue-tracker-github.md
+│   │           ├── triage-labels.md
+│   │           └── domain.md
 │   └── gt-social/
 │       ├── .claude-plugin/
 │       │   └── plugin.json
@@ -55,7 +57,7 @@ This repo is **private**. Access requires membership in the `graphictreat` GitHu
 
 | Skill | Description | Best used for |
 | --- | --- | --- |
-| `setup-gt-dev-skills` | Scaffolds an `## Agent skills` block in `AGENTS.md`/`CLAUDE.md` plus `docs/agents/` so engineering skills know the repo's issue tracker (GitHub or local markdown), triage label vocabulary, and domain doc layout. Slash-invoke only (not auto-triggered). | Bootstrapping a fresh repo to be consumable by the downstream engineering skills, or refreshing those configs when the issue tracker / label vocab changes. |
+| `setup-gt-dev-skills` | Scaffolds an `## Agent skills` block in `AGENTS.md`/`CLAUDE.md` plus `docs/agents/` so engineering skills know the repo's issue tracker (GitHub, or another tracker you describe), triage label vocabulary, and domain doc layout. Slash-invoke only (not auto-triggered). | Bootstrapping a fresh repo to be consumable by the downstream engineering skills, or refreshing those configs when the issue tracker / label vocab changes. |
 
 </details>
 
@@ -216,22 +218,14 @@ Tracking work still needed before this marketplace is feature-complete.
 
 ### `gt-engineering`
 
-The plugin is registered and `setup-gt-dev-skills` is wired up, but it's currently incomplete on its own — the scaffolder references templates and downstream skills that don't yet exist.
+The plugin is registered with `setup-gt-dev-skills` (wired up with its seed templates `issue-tracker-github.md`, `triage-labels.md`, `domain.md`) and `to-product-req` (turns the current conversation into a PRD and publishes it to the issue tracker). (The local-markdown issue tracker option was dropped; GitHub or a user-described tracker only.)
 
-**Missing seed templates** — `plugins/gt-engineering/setup-gt-dev-skills/SKILL.md` reads from these but they're not on disk:
+**Missing downstream skills** — `setup-gt-dev-skills` still references downstream skills that don't yet exist in this plugin. Either author them here or remove the references from the setup skill:
 
-- [ ] `issue-tracker-local.md` — seed template for the local-markdown issue tracker option (mirrors `issue-tracker-github.md`, but documents the `.local-wip/<feature>/` convention).
-- [ ] `domain.md` — seed template explaining single-context vs multi-context `CONTEXT.md` / ADR layout, and the consumer rules downstream skills follow.
-
-**Missing downstream skills** — `setup-gt-dev-skills` is a scaffolder for skills that don't yet exist in this plugin. Either author them here or remove the references from the setup skill:
-
-- [ ] `to-product-req` — converts a raw idea / bug report into a structured product requirement, then publishes to the configured issue tracker.
 - [ ] `triage` — runs an incoming issue through the five-state triage machine (`needs-triage` → `needs-info` / `ready-for-agent` / `ready-for-human` / `wontfix`) using the label vocabulary from `docs/agents/triage-labels.md`.
-- [ ] `improve-codebase-architecture` — reads `CONTEXT.md` + ADRs and proposes architectural improvements.
-- [ ] `diagnose` — root-cause investigation that uses `CONTEXT.md` for domain language.
 - [ ] `tdd` — TDD loop that consults domain docs before writing tests.
 
 ### Housekeeping
 
-- [ ] Tag a release once `gt-engineering` ships (`v0.3.0` for `gt-core` bumping to include `grill-me`, plus the new `gt-engineering` plugin entry).
+- [x] Tag a release once `gt-engineering` ships (`v0.3.0` for `gt-core` bumping to include `grill-me`, plus the new `gt-engineering` plugin entry).
 - [ ] Consider whether `grill-me` belongs under `gt-engineering` (planning/design context) instead of `gt-core` (orchestration) — it's currently in `gt-core` because it's project-agnostic.

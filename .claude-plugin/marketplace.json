@@ -13,9 +13,9 @@
     },
     {
       "name": "gt-engineering",
-      "description": "Graphictreat engineering workflow skills: per-repo setup (setup-gt-dev-skills) for issue tracker, triage label vocabulary, and domain doc layout, plus to-product-req for turning a conversation into a published PRD and to-issues for breaking a plan into tracer-bullet issues.",
+      "description": "Graphictreat engineering workflow skills: per-repo setup (setup-gt-dev-skills) for issue tracker, triage label vocabulary, and domain doc layout, plus to-product-req for turning a conversation into a published PRD, to-issues for breaking a plan into tracer-bullet issues, and tdd for a red-green-refactor test-first loop that verifies behavior through public interfaces.",
       "source": "./plugins/gt-engineering",
-      "version": "0.3.0"
+      "version": "0.4.0"
     },
     {
       "name": "gt-social",

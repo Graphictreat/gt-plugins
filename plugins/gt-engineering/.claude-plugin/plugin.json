@@ -1,7 +1,7 @@
 {
   "name": "gt-engineering",
-  "version": "0.3.0",
-  "description": "Graphictreat engineering workflow skills (per-repo setup, issue triage, product reqs).",
+  "version": "0.4.0",
+  "description": "Graphictreat engineering workflow skills (per-repo setup, product reqs, issue breakdown, test-driven development).",
   "author": {
     "name": "Graphictreat",
     "url": "https://github.com/graphictreat"

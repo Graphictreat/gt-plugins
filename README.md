@@ -30,7 +30,12 @@ This repo is **private**. Access requires membership in the `graphictreat` GitHu
 │   │       │   ├── triage-labels.md
 │   │       │   └── domain.md
 │   │       ├── to-product-req/SKILL.md
-│   │       └── to-issues/SKILL.md
+│   │       ├── to-issues/SKILL.md
+│   │       └── test-driven-development/
+│   │           ├── SKILL.md
+│   │           ├── tests.md
+│   │           ├── mocking.md
+│   │           └── refactoring.md
 │   └── gt-social/
 │       ├── .claude-plugin/
 │       │   └── plugin.json
@@ -62,6 +67,7 @@ This repo is **private**. Access requires membership in the `graphictreat` GitHu
 | `setup-gt-dev-skills` | Scaffolds an `## Agent skills` block in `AGENTS.md`/`CLAUDE.md` plus `docs/agents/` so engineering skills know the repo's issue tracker (GitHub, or another tracker you describe), triage label vocabulary, and domain doc layout. Slash-invoke only (not auto-triggered). | Bootstrapping a fresh repo to be consumable by the downstream engineering skills, or refreshing those configs when the issue tracker / label vocab changes. |
 | `to-product-req` | Synthesizes the current conversation into a Product Requirements Document (PRD) and publishes it to the project issue tracker — no interview, just synthesis of what's already been discussed. Slash-invoke only. | Turning an aligned discussion into a durable, agent-ready PRD on the issue tracker. |
 | `to-issues` | Breaks a plan, spec, or PRD into independently-grabbable issues on the project issue tracker using tracer-bullet vertical slices, quizzing the user on granularity and dependencies before publishing in dependency order. Slash-invoke only. | Decomposing an approved plan/PRD into thin end-to-end issues that AFK agents can pick up one at a time. |
+| `tdd` | Drives a red-green-refactor loop one vertical slice at a time (one test → minimal code → repeat), keeping tests on public interfaces so they survive refactors; reads `CONTEXT.md` and respects ADRs for domain vocabulary. | Building features or fixing bugs test-first, integration-style — when you want behavior-coupled tests rather than implementation-coupled ones. |
 
 </details>
 
@@ -222,12 +228,12 @@ Tracking work still needed before this marketplace is feature-complete.
 
 ### `gt-engineering`
 
-The plugin is registered with `setup-gt-dev-skills` (wired up with its seed templates `issue-tracker-github.md`, `triage-labels.md`, `domain.md`), `to-product-req` (turns the current conversation into a PRD and publishes it to the issue tracker), and `to-issues` (breaks a plan/PRD into tracer-bullet vertical-slice issues and publishes them in dependency order). (The local-markdown issue tracker option was dropped; GitHub or a user-described tracker only.)
+The plugin is registered with `setup-gt-dev-skills` (wired up with its seed templates `issue-tracker-github.md`, `triage-labels.md`, `domain.md`), `to-product-req` (turns the current conversation into a PRD and publishes it to the issue tracker), `to-issues` (breaks a plan/PRD into tracer-bullet vertical-slice issues and publishes them in dependency order), and `tdd` (red-green-refactor loop that reads `CONTEXT.md`/ADRs and tests through public interfaces). (The local-markdown issue tracker option was dropped; GitHub or a user-described tracker only.)
 
 **Missing downstream skills** — `setup-gt-dev-skills` still references downstream skills that don't yet exist in this plugin. Either author them here or remove the references from the setup skill:
 
 - [ ] `triage` — runs an incoming issue through the five-state triage machine (`needs-triage` → `needs-info` / `ready-for-agent` / `ready-for-human` / `wontfix`) using the label vocabulary from `docs/agents/triage-labels.md`.
-- [ ] `tdd` — TDD loop that consults domain docs before writing tests.
+- [x] `tdd` — TDD loop that consults domain docs before writing tests. (Shipped in gt-engineering 0.4.0.)
 
 ### Housekeeping
 

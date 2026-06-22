@@ -73,3 +73,28 @@ A description of the things that are out of scope for this PRD.
 Any further notes about the feature.
 
 </prd-template>
+
+4. After the PRD is published, **ask the user**: "Generate wireframes for this product? (y/n)". Only proceed if they opt in. If they decline, you're done.
+
+## Wireframes (opt-in)
+
+When the user opts in, emit two companion artifacts under `docs/wireframes/`. They are the design source of truth that the UI is built from, and `/to-issues` will reference them.
+
+### `docs/wireframes/wireframes.html` — self-contained visual wireframes
+
+- **Self-contained**: a single HTML file with inline CSS and no build step, no external dependencies, no network fonts — it must open correctly in any browser straight from disk.
+- **One device frame per screen**, covering all primary flows **and key states**: empty, error, permission prompt, and loading. A flow isn't covered until its off-happy-path states are drawn.
+- **Embedded brandbook header**: a swatches/tokens section at the top documenting the design system — color roles, the accent, any data-viz palette (e.g. a heat ramp), typography scale, spacing scale, corner radii, material/elevation levels, and motion durations. The HTML doubles as a living style reference.
+- **Design rules as explicit constraints**, not just swatches — e.g. "the heat ramp is the only chroma; the amber accent is reserved for primary action / you / active state." These constraints are what make an implementing agent's output match the intent.
+
+### `docs/wireframes/wireframes.md` — AI-oriented design spec
+
+Written **for an implementing agent**, detailed enough to build **pixel-faithful** UI from the md alone. For each screen, document:
+
+- Purpose, and the PRD user stories it satisfies.
+- Every component, its layout/positioning, and the exact design tokens it uses.
+- All states (empty / error / permission / loading), interactions, and transitions.
+
+### Token contract
+
+Centralize the design tokens in the HTML brandbook **and restate them in the md** so client code can mirror them as a token enum/struct (one canonical source → code). Capture the design rules alongside the tokens so the intent travels with the values, not just the hex codes.

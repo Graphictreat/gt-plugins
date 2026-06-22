@@ -40,6 +40,18 @@ RIGHT (vertical):
   ...
 ```
 
+## Keeping the tracked issue in sync
+
+When the work maps to an issue on the project tracker (run `/setup-gt-dev-skills` if the issue-tracker convention hasn't been provided), **keeping that issue current is as routine as committing.** The tracker is the shared source of truth — if you implement silently, reviewers and teammates can't see progress and the backlog misrepresents what's actually built. Don't wait for the user to ask for an update at the end.
+
+- **On start:** comment on the issue that work has begun and reference the branch. Move its triage label if the project uses one (e.g. `ready-for-agent` → `in-progress`).
+- **During:** after each meaningful slice / commit, append a short progress note — what's done, what remains — referencing the commit SHA(s). Reference the issue in every commit message (`Refs #N` while iterating).
+- **On finish:** post a closing summary mapping commits → acceptance criteria, and check off the criteria that are met. Use `Closes #N` on the final commit.
+- **Close honestly.** Only close the issue when its acceptance criteria are _fully_ satisfied. Don't auto-close a full-stack issue when only the client slice is done — be explicit about **what was NOT done** (e.g. server seam vs client seam) so the issue reflects partial completion truthfully.
+- **Flag unmerged work.** If the closing commits live on an unmerged branch rather than the default branch, say so in the comment — "closed" should not be mistaken for "shipped."
+
+See the issue-tracker convention doc for the exact `gh` commands (comment, label, close).
+
 ## Workflow
 
 ### 1. Planning
@@ -52,6 +64,7 @@ Before writing any code:
 - [ ] Confirm with user which behaviors to test (prioritize)
 - [ ] Identify opportunities for deep modules (small interface, deep implementation) — run the `/codebase-design` skill for the vocabulary and the testability checks
 - [ ] List the behaviors to test (not implementation steps)
+- [ ] If the work maps to a tracked issue, comment that work has begun and reference the branch (see "Keeping the tracked issue in sync")
 - [ ] Get user approval on the plan
 
 Ask: "What should the public interface look like? Which behaviors are most important to test?"
@@ -105,4 +118,5 @@ After all tests pass, look for [refactor candidates](refactoring.md):
 [ ] Test would survive internal refactor
 [ ] Code is minimal for this test
 [ ] No speculative features added
+[ ] Tracked issue updated with progress (if work maps to an issue)
 ```

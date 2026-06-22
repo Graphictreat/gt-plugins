@@ -31,11 +31,13 @@ This repo is **private**. Access requires membership in the `graphictreat` GitHu
 │   │       │   └── domain.md
 │   │       ├── to-product-req/SKILL.md
 │   │       ├── to-issues/SKILL.md
-│   │       └── test-driven-development/
-│   │           ├── SKILL.md
-│   │           ├── tests.md
-│   │           ├── mocking.md
-│   │           └── refactoring.md
+│   │       ├── test-driven-development/
+│   │       │   ├── SKILL.md
+│   │       │   ├── tests.md
+│   │       │   ├── mocking.md
+│   │       │   └── refactoring.md
+│   │       └── validate-prd-implementation/
+│   │           └── SKILL.md
 │   └── gt-social/
 │       ├── .claude-plugin/
 │       │   └── plugin.json
@@ -68,6 +70,7 @@ This repo is **private**. Access requires membership in the `graphictreat` GitHu
 | `to-product-req` | Synthesizes the current conversation into a Product Requirements Document (PRD) and publishes it to the project issue tracker — no interview, just synthesis of what's already been discussed. Optionally (opt-in) emits self-contained wireframes (`wireframes.html` with an embedded brandbook + key states) and an AI-oriented design spec (`wireframes.md`) for pixel-faithful UI. Slash-invoke only. | Turning an aligned discussion into a durable, agent-ready PRD — and optionally a wireframe set — on the issue tracker. |
 | `to-issues` | Breaks a plan, spec, or PRD into independently-grabbable issues on the project issue tracker using tracer-bullet vertical slices, quizzing the user on granularity and dependencies before publishing in dependency order. When wireframes exist, references the matching screen + design spec in each issue and runs a coverage check so every screen maps to an issue. Slash-invoke only. | Decomposing an approved plan/PRD into thin end-to-end issues that AFK agents can pick up one at a time. |
 | `tdd` | Drives a red-green-refactor loop one vertical slice at a time (one test → minimal code → repeat), keeping tests on public interfaces so they survive refactors; reads `CONTEXT.md` and respects ADRs for domain vocabulary. Verifies the real target builds after each GREEN step (not just the unit under test), keeps the tracked issue in sync as it goes, and drives ad-hoc change requests through tracked issues end-to-end. | Building features or fixing bugs test-first, integration-style — when you want behavior-coupled tests rather than implementation-coupled ones. |
+| `validate-prd-implementation` | Validates the codebase on the default branch against a PRD GitHub issue — checks user stories, implementation decisions, testing decisions, wireframe screen coverage, and child issue acceptance criteria checkboxes. Runs the test suite for objective pass/fail signal, posts a structured gap report as a comment on the PRD issue, and creates `ready-for-agent` vertical-slice issues for any confirmed gaps or bugs. | Auditing whether a shipped or in-progress feature actually covers everything the PRD promised — before closing out a milestone or handing off to QA. |
 
 </details>
 
@@ -228,7 +231,7 @@ Tracking work still needed before this marketplace is feature-complete.
 
 ### `gt-engineering`
 
-The plugin is registered with `setup-gt-dev-skills` (wired up with its seed templates `issue-tracker-github.md`, `triage-labels.md`, `domain.md`), `to-product-req` (turns the current conversation into a PRD and publishes it to the issue tracker), `to-issues` (breaks a plan/PRD into tracer-bullet vertical-slice issues and publishes them in dependency order), and `tdd` (red-green-refactor loop that reads `CONTEXT.md`/ADRs and tests through public interfaces). (The local-markdown issue tracker option was dropped; GitHub or a user-described tracker only.)
+The plugin is registered with `setup-gt-dev-skills` (wired up with its seed templates `issue-tracker-github.md`, `triage-labels.md`, `domain.md`), `to-product-req` (turns the current conversation into a PRD and publishes it to the issue tracker), `to-issues` (breaks a plan/PRD into tracer-bullet vertical-slice issues and publishes them in dependency order), `tdd` (red-green-refactor loop that reads `CONTEXT.md`/ADRs and tests through public interfaces), and `validate-prd-implementation` (validates the codebase on the default branch against a PRD issue — checks user stories, implementation decisions, testing decisions, wireframes, and child issue acceptance criteria; posts a gap report and creates issues for gaps/bugs). (The local-markdown issue tracker option was dropped; GitHub or a user-described tracker only.)
 
 **Missing downstream skills** — `setup-gt-dev-skills` still references downstream skills that don't yet exist in this plugin. Either author them here or remove the references from the setup skill:
 

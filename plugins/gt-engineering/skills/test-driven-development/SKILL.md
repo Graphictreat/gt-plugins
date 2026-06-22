@@ -40,6 +40,19 @@ RIGHT (vertical):
   ...
 ```
 
+## Ad-hoc change requests are tracked work too
+
+When the user makes ad-hoc requests mid-session — design tweaks, bug fixes, polish — **turn them into tracked issues and drive them end-to-end**, the same way you would for planned work. This is the default, not something to do only when the user asks for it. Loose requests otherwise leave no trace: no acceptance criteria, no commit↔issue linkage, no record of what shipped or why. Making the issue the unit of work keeps the backlog honest and the history auditable, even for small visual changes that are easy to do "off the books."
+
+For each batch of change requests, run this loop:
+
+1. **Create an issue per distinct change**, each with a title + acceptance criteria (e.g. "Map: flatten to monochrome", "Sheets: top/bottom padding", "Review flow: SiwA dead-ends"). Use `/to-issues` if there are several.
+2. **Branch** using the project's convention (`feature/…`, `bugfix/…`).
+3. **Implement each via the TDD loop below**, with commits that reference the issue (`Refs #N` while iterating, `Closes #N` on the final commit).
+4. **Verify the build after each change** — for UI work, an actual app build, not just the unit test passing.
+5. **Update the issue as you go** (see "Keeping the tracked issue in sync") and **close it when its acceptance criteria are met**, with a comment listing the implementing commit SHAs and the branch.
+6. **Note where the work landed** — if it's on an unmerged branch rather than the default branch, say so, so "closed" isn't mistaken for "shipped."
+
 ## Keeping the tracked issue in sync
 
 When the work maps to an issue on the project tracker (run `/setup-gt-dev-skills` if the issue-tracker convention hasn't been provided), **keeping that issue current is as routine as committing.** The tracker is the shared source of truth — if you implement silently, reviewers and teammates can't see progress and the backlog misrepresents what's actually built. Don't wait for the user to ask for an update at the end.

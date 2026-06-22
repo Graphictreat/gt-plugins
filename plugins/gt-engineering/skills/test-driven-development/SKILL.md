@@ -110,8 +110,22 @@ Rules:
 - Only enough code to pass current test
 - Don't anticipate future tests
 - Keep tests focused on observable behavior
+- GREEN isn't reached until the build is green too — verify it before moving on (see below)
 
-### 4. Refactor
+### 4. Verify the build
+
+**"Tests pass" and "it compiles in the shipping target" are different guarantees.** A green unit test does not mean the integrated app builds — UI and integration code frequently type-checks in isolation but fails in the real target (modifier availability, actor isolation, SDK differences). Verifying the build is a first-class, non-optional step, not a final formality.
+
+After each GREEN, before reporting progress or moving to the next test:
+
+- **Build the actual target, not just the unit under test.** Confirm it compiles.
+- **Treat a failing build exactly like a failing test** — stay RED, fix it, re-verify. Don't report the step done on code that doesn't build.
+- **When the test runner and the app target differ** (e.g. a SwiftPM package consumed by an Xcode app), verify **both**: run the tests _and_ build the consuming app.
+- **For UI work**, confirm the view/preview actually builds and is viewable — not just that the logic underneath it type-checks.
+
+This is the build-verification step that the ad-hoc change-request loop refers to (step 4 of "Ad-hoc change requests are tracked work too").
+
+### 5. Refactor
 
 After all tests pass, look for [refactor candidates](refactoring.md):
 
@@ -131,5 +145,8 @@ After all tests pass, look for [refactor candidates](refactoring.md):
 [ ] Test would survive internal refactor
 [ ] Code is minimal for this test
 [ ] No speculative features added
+[ ] Code compiles in the real target (not only the unit under test)
+[ ] Build is green before reporting the step done
+[ ] For UI work: the view/preview builds and is viewable
 [ ] Tracked issue updated with progress (if work maps to an issue)
 ```

@@ -1,6 +1,6 @@
 {
   "name": "gt-engineering",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "Graphictreat engineering workflow skills (per-repo setup, product reqs, issue breakdown, test-driven development).",
   "author": {
     "name": "Graphictreat",

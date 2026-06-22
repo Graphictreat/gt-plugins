@@ -40,6 +40,31 @@ RIGHT (vertical):
   ...
 ```
 
+## Ad-hoc change requests are tracked work too
+
+When the user makes ad-hoc requests mid-session — design tweaks, bug fixes, polish — **turn them into tracked issues and drive them end-to-end**, the same way you would for planned work. This is the default, not something to do only when the user asks for it. Loose requests otherwise leave no trace: no acceptance criteria, no commit↔issue linkage, no record of what shipped or why. Making the issue the unit of work keeps the backlog honest and the history auditable, even for small visual changes that are easy to do "off the books."
+
+For each batch of change requests, run this loop:
+
+1. **Create an issue per distinct change**, each with a title + acceptance criteria (e.g. "Map: flatten to monochrome", "Sheets: top/bottom padding", "Review flow: SiwA dead-ends"). Use `/to-issues` if there are several.
+2. **Branch** using the project's convention (`feature/…`, `bugfix/…`).
+3. **Implement each via the TDD loop below**, with commits that reference the issue (`Refs #N` while iterating, `Closes #N` on the final commit).
+4. **Verify the build after each change** — for UI work, an actual app build, not just the unit test passing.
+5. **Update the issue as you go** (see "Keeping the tracked issue in sync") and **close it when its acceptance criteria are met**, with a comment listing the implementing commit SHAs and the branch.
+6. **Note where the work landed** — if it's on an unmerged branch rather than the default branch, say so, so "closed" isn't mistaken for "shipped."
+
+## Keeping the tracked issue in sync
+
+When the work maps to an issue on the project tracker (run `/setup-gt-dev-skills` if the issue-tracker convention hasn't been provided), **keeping that issue current is as routine as committing.** The tracker is the shared source of truth — if you implement silently, reviewers and teammates can't see progress and the backlog misrepresents what's actually built. Don't wait for the user to ask for an update at the end.
+
+- **On start:** comment on the issue that work has begun and reference the branch. Move its triage label if the project uses one (e.g. `ready-for-agent` → `in-progress`).
+- **During:** after each meaningful slice / commit, append a short progress note — what's done, what remains — referencing the commit SHA(s). Reference the issue in every commit message (`Refs #N` while iterating).
+- **On finish:** post a closing summary mapping commits → acceptance criteria, and check off the criteria that are met. Use `Closes #N` on the final commit.
+- **Close honestly.** Only close the issue when its acceptance criteria are _fully_ satisfied. Don't auto-close a full-stack issue when only the client slice is done — be explicit about **what was NOT done** (e.g. server seam vs client seam) so the issue reflects partial completion truthfully.
+- **Flag unmerged work.** If the closing commits live on an unmerged branch rather than the default branch, say so in the comment — "closed" should not be mistaken for "shipped."
+
+See the issue-tracker convention doc for the exact `gh` commands (comment, label, close).
+
 ## Workflow
 
 ### 1. Planning
@@ -52,6 +77,7 @@ Before writing any code:
 - [ ] Confirm with user which behaviors to test (prioritize)
 - [ ] Identify opportunities for deep modules (small interface, deep implementation) — run the `/codebase-design` skill for the vocabulary and the testability checks
 - [ ] List the behaviors to test (not implementation steps)
+- [ ] If the work maps to a tracked issue, comment that work has begun and reference the branch (see "Keeping the tracked issue in sync")
 - [ ] Get user approval on the plan
 
 Ask: "What should the public interface look like? Which behaviors are most important to test?"
@@ -105,4 +131,5 @@ After all tests pass, look for [refactor candidates](refactoring.md):
 [ ] Test would survive internal refactor
 [ ] Code is minimal for this test
 [ ] No speculative features added
+[ ] Tracked issue updated with progress (if work maps to an issue)
 ```

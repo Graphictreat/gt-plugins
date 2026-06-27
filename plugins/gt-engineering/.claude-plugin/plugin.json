@@ -1,7 +1,7 @@
 {
   "name": "gt-engineering",
-  "version": "0.8.0",
-  "description": "Graphictreat engineering workflow skills (per-repo setup, product reqs, issue breakdown, test-driven development, PRD implementation, PRD implementation validation).",
+  "version": "0.9.0",
+  "description": "Graphictreat engineering workflow skills (per-repo setup, product reqs, issue breakdown, test-driven development, PRD implementation, parallel bug resolution, PRD implementation validation).",
   "author": {
     "name": "Graphictreat",
     "url": "https://github.com/graphictreat"

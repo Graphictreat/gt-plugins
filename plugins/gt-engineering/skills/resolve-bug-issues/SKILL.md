@@ -22,7 +22,7 @@ The issue tracker and triage label vocabulary should have been provided to you �
 
 ### 1. Discover bug issues
 
-List all open issues with the bug label: `gh issue list --label bug --state open --json number,title,body`. Fetch each one's full body (the reproduction steps, expected vs. actual behaviour, and any `## Blocked by` section). If there are none, say so and stop.
+Issues are identified **by the `bug` label only** — not by any title prefix or naming convention. List them with `gh issue list --label bug --state open --json number,title,body`. Fetch each one's full body (the reproduction steps, expected vs. actual behaviour, and any `## Blocked by` section). If there are none, say so and stop.
 
 ### 2. Determine dependency order
 
@@ -36,7 +36,7 @@ Read each issue's `## Blocked by` section and build a dependency graph.
 
 Spawn a parallel subagent for each issue, **each in its own isolated git worktree** so concurrent file edits don't collide. Give each subagent its issue number, title, and full body, plus these instructions:
 
-- **Create a dedicated branch** `fix/<issue-number>-<slug>` off the current default branch. **NEVER commit to main.**
+- **Create a dedicated branch** `bugfix/<issue-number>` off the current default branch. **NEVER commit to main.**
 - **Reproduce the bug with a failing test first** (RED) — drive it through the `tdd` skill. The test must fail for the right reason before any fix, proving it actually captures the bug.
 - **Implement the minimal fix** (GREEN). No unrequested features, abstractions, or drive-by refactors — fix the bug and nothing else.
 - **Confirm the full test suite and the build pass** — not just the new test.
@@ -61,10 +61,10 @@ Give the user a markdown table plus any follow-up notes:
 ```
 | Issue | Branch | PR | Status |
 | --- | --- | --- | --- |
-| #12 — <title> | fix/12-… | #41 | ✅ merged · issue closed |
-| #15 — <title> | fix/15-… | #42 | ⏳ open — needs human review |
-| #18 — <title> | fix/18-… | — | ⚠️ could not reproduce |
-| #20 — <title> | fix/20-… | #43 | ⛔ skipped — blocked by #15 |
+| #12 — <title> | bugfix/12 | #41 | ✅ merged · issue closed |
+| #15 — <title> | bugfix/15 | #42 | ⏳ open — needs human review |
+| #18 — <title> | bugfix/18 | — | ⚠️ could not reproduce |
+| #20 — <title> | bugfix/20 | #43 | ⛔ skipped — blocked by #15 |
 ```
 
 Note any human follow-up required (a PR left open for review, a bug that couldn't be reproduced, a blocked issue awaiting its blocker).

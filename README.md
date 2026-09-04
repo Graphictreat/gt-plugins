@@ -15,6 +15,16 @@ This repo is **private**. Access requires membership in the `graphictreat` GitHu
 │   │   ├── .claude-plugin/
 │   │   │   └── plugin.json    Plugin manifest (name, version, author)
 │   │   └── skills/
+│   │       ├── brainstorming/
+│   │       │   ├── SKILL.md
+│   │       │   ├── visual-companion.md
+│   │       │   ├── spec-document-reviewer-prompt.md
+│   │       │   └── scripts/
+│   │       │       ├── server.cjs
+│   │       │       ├── helper.js
+│   │       │       ├── frame-template.html
+│   │       │       ├── start-server.sh
+│   │       │       └── stop-server.sh
 │   │       ├── fan-out-fan-in/SKILL.md
 │   │       ├── grill-me/SKILL.md
 │   │       ├── model-chat/SKILL.md
@@ -55,6 +65,7 @@ This repo is **private**. Access requires membership in the `graphictreat` GitHu
 
 | Skill | Description | Best used for |
 | --- | --- | --- |
+| `brainstorming` | Turns ideas into approved designs before any code is written. Classifies each request as spike / bounded / architectural, asks clarifying questions one at a time, presents a design scaled to the task, and hard-gates implementation on explicit approval. Architectural work gets a committed spec doc; an optional browser-based visual companion (self-contained Node server, no deps) shows mockups and diagrams when a question is clearer shown than told. | Any creative work — new features, components, or behavior changes — where you want intent, requirements, and design nailed down and approved before implementation starts. |
 | `fan-out-fan-in` | Spawns N cheap parallel researcher subagents on different angles of a question, then synthesizes their outputs with one stronger model. | Open-ended research where breadth + speed beat serial depth — "research X", "find best Y", "compare A/B/C", "how should I optimize Z". |
 | `stochastic-consensus` | Spawns N agents in parallel with slightly different personas, each produces M independent ideas, then aggregates by frequency — high-vote ideas are consensus, single-vote ideas are outliers. | Brainstorming, option generation, ranking, and strategic analysis where you want to filter hallucinations and surface the full search space. |
 | `pipeline` | Sequential specialist handoff — decomposes a task into stages and runs each as a focused subagent with its own clean context (dev → review → test, research → design → implement → QA). | Multi-phase tasks where carrying all prior context into the next phase would degrade quality — "build then test", "design and review". |

@@ -272,6 +272,7 @@ If `$STATE_DIR/events` doesn't exist, the user didn't interact with the browser 
 ## Design Tips
 
 - **Scale fidelity to the question** — wireframes for layout, polish for polish questions
+- **Approval previews are exact** — when the screen is the design the user will approve, reproduce the real page with the change in place: actual theme tokens, fonts, and colors from the project, and working behavior (a carousel autoplays, a dialog opens). No debug labels, "NEW" badges, dimmed "existing" markers, or annotations — the user must see exactly what they'd get. Explain how it works in a section below the preview, visually separated (e.g. after a divider). Write these as full documents (`<!DOCTYPE html>`) so the frame chrome doesn't dilute the preview.
 - **Explain the question on each page** — "Which layout feels more professional?" not just "Pick one"
 - **Iterate before advancing** — if feedback changes current screen, write a new version
 - **2-4 options max** per screen

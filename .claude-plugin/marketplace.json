@@ -9,7 +9,7 @@
       "name": "gt-core",
       "description": "Graphictreat team-wide Claude Code skills: agent orchestration patterns (fan-out-fan-in, model-chat, pipeline, stochastic-consensus), collaboration helpers (grill-me), and design-before-code brainstorming with an optional browser visual companion (brainstorming).",
       "source": "./plugins/gt-core",
-      "version": "0.5.0"
+      "version": "0.6.0"
     },
     {
       "name": "gt-engineering",

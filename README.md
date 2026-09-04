@@ -1,8 +1,8 @@
 # graphictreat/gt-plugins
 
-Private plugin marketplace for the Graphictreat team, usable from both **Claude Code** and **OpenAI Codex** (Codex reads the Claude plugin format natively — `.claude-plugin/marketplace.json` and `.claude-plugin/plugin.json` are on its manifest discovery lists). Hosts the `gt-core` plugin (shared team-wide skills), `gt-engineering` (per-repo engineering workflow), and `gt-social` (social media content generation).
+Graphictreat's plugin marketplace, usable from both **Claude Code** and **OpenAI Codex** (Codex reads the Claude plugin format natively — `.claude-plugin/marketplace.json` and `.claude-plugin/plugin.json` are on its manifest discovery lists). Hosts the `gt-core` plugin (shared team-wide skills), `gt-engineering` (per-repo engineering workflow), and `gt-social` (social media content generation).
 
-This repo is **private**. Access requires membership in the `graphictreat` GitHub org.
+MIT licensed — anyone can install and use these plugins. See [Installation](#installation).
 
 ## What's in here
 
@@ -62,6 +62,7 @@ This repo is **private**. Access requires membership in the `graphictreat` GitHu
 │       │   └── plugin.json
 │       └── skills/
 │           └── x-post-gen/SKILL.md
+├── LICENSE
 └── README.md
 ```
 
@@ -108,22 +109,11 @@ This repo is **private**. Access requires membership in the `graphictreat` GitHu
 
 ## Installation
 
-Run these once on each machine.
+Run these once on each machine. Install only the plugins you want — each is independent.
 
-### 1. Make sure you can read this repo
+### Claude Code
 
-You need a GitHub account that's been added to the `graphictreat` org with read access. Verify:
-
-```bash
-gh auth status
-gh repo view graphictreat/gt-plugins
-```
-
-If `gh` isn't set up, run `gh auth login` first.
-
-### 2. Add the marketplace
-
-Inside Claude Code:
+Add the marketplace, inside Claude Code:
 
 ```
 /plugin marketplace add graphictreat/gt-plugins
@@ -135,11 +125,7 @@ Or from the shell:
 claude plugin marketplace add graphictreat/gt-plugins
 ```
 
-This clones the marketplace into `~/.claude/plugins/marketplaces/graphictreat/` using your `gh` credentials.
-
-### 3. Install the plugins you want
-
-Inside Claude Code:
+Then install the plugins you want:
 
 ```
 /plugin install gt-core@graphictreat
@@ -149,7 +135,7 @@ Inside Claude Code:
 
 Skills are now available in every Claude Code session on your machine, namespaced as `gt-core:<skill-name>`, `gt-engineering:<skill-name>`, and `gt-social:<skill-name>`.
 
-## Using with OpenAI Codex
+### OpenAI Codex
 
 Codex's plugin system reads this repo's Claude plugin format directly — no conversion or separate packaging needed. Each plugin also ships a `.codex-plugin/plugin.json` overlay with display metadata (display name, descriptions, default prompts) for Codex's `/plugins` browser. From the shell:
 
@@ -267,9 +253,9 @@ When a teammate trusts the folder, Claude Code prompts them to install this exac
 
 ## Troubleshooting
 
-- **"Cannot read marketplace"** — check `gh auth status`; you likely need `gh auth login` with `repo` scope.
+- **"Cannot read marketplace"** — check your network and that the repo URL is `graphictreat/gt-plugins` (renamed from `claude-plugins`; old URLs redirect).
 - **Skills don't appear after install** — restart Claude Code; structural changes (new skill dirs) require a session restart.
-- **Auto-update silently fails on private repos** — set `GITHUB_TOKEN` in your shell env, or run `/plugin update gt-core` manually.
+- **Auto-update silently fails** — run `/plugin update gt-core` (Claude Code) or `codex plugin marketplace upgrade graphictreat` (Codex) manually.
 - **Skill name collides with a personal skill** — plugin skills are namespaced (`gt-core:foo`) and never collide; if you can't invoke yours by short name, the personal one is shadowed by plugin precedence — invoke explicitly with the full name.
 
 ## TODO
@@ -289,3 +275,7 @@ The plugin is registered with `setup-gt-dev-skills` (wired up with its seed temp
 
 - [x] Tag a release once `gt-engineering` ships (`v0.3.0` for `gt-core` bumping to include `grill-me`, plus the new `gt-engineering` plugin entry).
 - [ ] Consider whether `grill-me` belongs under `gt-engineering` (planning/design context) instead of `gt-core` (orchestration) — it's currently in `gt-core` because it's project-agnostic.
+
+## License
+
+[MIT](LICENSE) © Graphictreat.

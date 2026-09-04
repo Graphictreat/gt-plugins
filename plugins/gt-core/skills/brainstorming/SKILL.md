@@ -73,6 +73,8 @@ artifact, never the approval.
 | "The spike works, so I'll keep the code" | A spike's output is an answer. Keeping the code is a new request — classify it. |
 | "It grew, but I'm almost done — no need to re-classify" | Hidden complexity upgrades the path mid-task. Stop and say so. |
 | "They approved the spike, so the follow-up change is approved too" | Each task gets its own classification and its own approval. |
+| "It's a UI change but I described it well, so text approval is enough" | The user approves what they SEE. Show a faithful preview first; describing a screen is not showing it. |
+| "They approved the design, so I'll start implementing" | Design approval and delivery mode are separate questions. Ask: implement now, or `/to-issues`? |
 
 ## Checklist
 
@@ -90,8 +92,9 @@ your path and complete them in order.
 1. **Explore project context** — check files, docs, recent commits
 2. **Ask clarifying questions** — one at a time, the ones that matter
 3. **Present short design in chat** — approach, files touched, testing
-4. **Get approval** — STOP and wait for an explicit yes; presenting the design and starting in the same breath is skipping the gate
-5. **Implement** — proceed with the normal development workflow (TDD applies); no plan document
+4. **Show it before asking for approval (user-visible UI only)** — if the change is something the user will see on screen, they must SEE the design before they can approve it. Offer the visual companion and render a faithful preview: the real page with the change in place, real theme and fonts, working behavior — NO debug labels, annotations, or wireframe framing. Put the how-it-works explanation BELOW the preview, never inside it. Non-visual changes skip this step.
+5. **Get approval** — STOP and wait for an explicit yes; presenting the design and starting in the same breath is skipping the gate
+6. **Ask how to proceed** — approval of the design is not approval of a delivery mode. Ask your human partner: implement it directly now (normal development workflow, TDD applies, no plan document), or publish it as tracked issue(s) via `/gt-engineering:to-issues`? That skill is slash-invoke only — if they pick it, present the command and stop.
 
 **Architectural:**
 1. **Explore project context** — check files, docs, recent commits
@@ -112,9 +115,12 @@ digraph brainstorming {
     "Present question + probe (2-3 sentences)" [shape=box];
     "Ask clarifying questions (bounded)" [shape=box];
     "Present short design in chat" [shape=box];
+    "UI change? Show faithful preview" [shape=box];
     "Human approves?" [shape=diamond];
+    "Ask: implement now, or /to-issues?" [shape=diamond];
     "Investigate; report recommendation" [shape=doublecircle];
     "Implement via normal workflow (no plan doc)" [shape=doublecircle];
+    "Suggest /gt-engineering:to-issues and stop" [shape=doublecircle];
     "Explore project context" [shape=box];
     "Ask clarifying questions" [shape=box];
     "Propose 2-3 approaches" [shape=box];
@@ -131,9 +137,12 @@ digraph brainstorming {
     "Classify: spike / bounded / architectural" -> "Explore project context" [label="architectural"];
     "Present question + probe (2-3 sentences)" -> "Human approves?";
     "Ask clarifying questions (bounded)" -> "Present short design in chat";
-    "Present short design in chat" -> "Human approves?";
+    "Present short design in chat" -> "UI change? Show faithful preview";
+    "UI change? Show faithful preview" -> "Human approves?";
     "Human approves?" -> "Investigate; report recommendation" [label="spike: yes"];
-    "Human approves?" -> "Implement via normal workflow (no plan doc)" [label="bounded: yes"];
+    "Human approves?" -> "Ask: implement now, or /to-issues?" [label="bounded: yes"];
+    "Ask: implement now, or /to-issues?" -> "Implement via normal workflow (no plan doc)" [label="implement"];
+    "Ask: implement now, or /to-issues?" -> "Suggest /gt-engineering:to-issues and stop" [label="issues"];
     "Hidden complexity? Upgrade path" -> "Classify: spike / bounded / architectural";
     "Explore project context" -> "Ask clarifying questions";
     "Ask clarifying questions" -> "Propose 2-3 approaches";
@@ -152,10 +161,12 @@ digraph brainstorming {
 after brainstorming is the gt-engineering handoff
 (`/gt-engineering:to-issues`, optionally preceded by
 `/gt-engineering:to-product-req`) — never any implementation
-skill. Bounded: after
-approval, implementation proceeds directly through the normal
-development workflow; no plan document. Spike: the terminal state is a
-reported recommendation.
+skill. Bounded: approval of the design is followed by ONE more
+question — implement directly now, or publish as tracked issue(s) via
+`/gt-engineering:to-issues`? Direct implementation proceeds through
+the normal development workflow with no plan document; the issues
+route means presenting the slash command and stopping. Spike: the
+terminal state is a reported recommendation.
 
 ## The Process
 
@@ -256,6 +267,8 @@ A browser-based companion for showing mockups, diagrams, and visual options duri
 - **Use the terminal** for content that is text — requirements questions, conceptual choices, tradeoff lists, A/B/C/D text options, scope decisions
 
 A question about a UI topic is not automatically a visual question. "What does personality mean in this context?" is a conceptual question — use the terminal. "Which wizard layout works better?" is a visual question — use the browser.
+
+**Faithful previews for approval.** When the screen you push is the design the user is being asked to approve, it must show EXACTLY how the change would look: the real page reproduced with the change in place, the project's actual theme, fonts, and colors, and working behavior (animations, autoplay, interactions). No debug labels, "NEW"/"existing" badges, dimming, or wireframe framing — annotations belong in earlier exploratory screens, never in the approval preview. Put the how-it-works explanation below the preview, visually separated from it.
 
 If they agree to the companion, read the detailed guide before proceeding:
 `visual-companion.md` (in this skill's directory, alongside this SKILL.md)

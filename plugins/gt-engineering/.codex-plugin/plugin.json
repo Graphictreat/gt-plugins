@@ -1,0 +1,37 @@
+{
+  "name": "gt-engineering",
+  "version": "0.12.0",
+  "description": "Graphictreat engineering workflow skills: per-repo setup, product requirements, issue breakdown, test-driven development, PRD implementation, parallel bug resolution, PRD validation, and senior UI/UX frontend design-taste rules.",
+  "author": {
+    "name": "Graphictreat",
+    "url": "https://github.com/graphictreat"
+  },
+  "homepage": "https://github.com/Graphictreat/gt-plugins",
+  "repository": "https://github.com/Graphictreat/gt-plugins",
+  "keywords": [
+    "tdd",
+    "prd",
+    "issues",
+    "planning",
+    "bugfix",
+    "frontend-design",
+    "workflow"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "GT Engineering",
+    "shortDescription": "Graphictreat per-repo engineering workflow: PRDs, issues, TDD, and delivery",
+    "longDescription": "End-to-end engineering workflow skills for a repo: bootstrap issue-tracker and domain-doc config (setup-gt-dev-skills), synthesize conversations into PRDs (to-product-req), break plans into tracer-bullet issues (to-issues), build test-first (tdd), implement PRDs branch-by-branch (to-implement-prd), burn down bug backlogs in parallel (resolve-bug-issues), validate shipped work against the PRD (validate-prd-implementation), and apply senior frontend design taste (design-taste-frontend).",
+    "developerName": "Graphictreat",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Let's turn this discussion into a PRD and break it into issues.",
+      "Build this feature test-first."
+    ]
+  }
+}

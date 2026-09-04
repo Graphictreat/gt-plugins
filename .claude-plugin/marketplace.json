@@ -9,19 +9,19 @@
       "name": "gt-core",
       "description": "Graphictreat team-wide Claude Code skills: agent orchestration patterns (fan-out-fan-in, model-chat, pipeline, stochastic-consensus), collaboration helpers (grill-me), and design-before-code brainstorming with an optional browser visual companion (brainstorming).",
       "source": "./plugins/gt-core",
-      "version": "0.6.0"
+      "version": "0.7.0"
     },
     {
       "name": "gt-engineering",
       "description": "Graphictreat engineering workflow skills: per-repo setup (setup-gt-dev-skills) for issue tracker, triage label vocabulary, and domain doc layout, plus to-product-req for turning a conversation into a published PRD (with opt-in self-contained wireframes + design spec), to-issues for breaking a plan into wireframe-aware tracer-bullet issues, and tdd for a red-green-refactor test-first loop that verifies the real target builds after each step, keeps the tracked issue in sync, and drives ad-hoc change requests through issues end-to-end, and design-taste-frontend for senior UI/UX frontend design-taste rules that override default LLM design biases.",
       "source": "./plugins/gt-engineering",
-      "version": "0.11.0"
+      "version": "0.12.0"
     },
     {
       "name": "gt-social",
       "description": "Graphictreat skills for social media content generation (x-post-gen, with more platforms to come).",
       "source": "./plugins/gt-social",
-      "version": "0.1.0"
+      "version": "0.2.0"
     }
   ]
 }

@@ -1,0 +1,36 @@
+{
+  "name": "gt-core",
+  "version": "0.7.0",
+  "description": "Graphictreat team-wide skills: agent orchestration patterns (fan-out-fan-in, model-chat, pipeline, stochastic-consensus), collaboration helpers (grill-me), and design-before-code brainstorming with an optional browser visual companion.",
+  "author": {
+    "name": "Graphictreat",
+    "url": "https://github.com/graphictreat"
+  },
+  "homepage": "https://github.com/Graphictreat/gt-plugins",
+  "repository": "https://github.com/Graphictreat/gt-plugins",
+  "keywords": [
+    "brainstorming",
+    "orchestration",
+    "research",
+    "consensus",
+    "pipeline",
+    "workflow"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "GT Core",
+    "shortDescription": "Graphictreat team-wide orchestration and design-before-code skills",
+    "longDescription": "Shared Graphictreat skills for any project: fan-out-fan-in parallel research, stochastic-consensus brainstorming, sequential pipeline handoffs, model-chat multi-agent debate, grill-me plan interrogation, and a brainstorming skill that turns ideas into approved designs before any code is written.",
+    "developerName": "Graphictreat",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "I've got an idea I want to think through before building.",
+      "Research the best approach for this and compare the options."
+    ]
+  }
+}

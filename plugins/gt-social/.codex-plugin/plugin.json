@@ -1,0 +1,34 @@
+{
+  "name": "gt-social",
+  "version": "0.2.0",
+  "description": "Graphictreat skills for social media content generation (X, and more to come).",
+  "author": {
+    "name": "Graphictreat",
+    "url": "https://github.com/graphictreat"
+  },
+  "homepage": "https://github.com/Graphictreat/gt-plugins",
+  "repository": "https://github.com/Graphictreat/gt-plugins",
+  "keywords": [
+    "social-media",
+    "twitter",
+    "x",
+    "content",
+    "marketing"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "GT Social",
+    "shortDescription": "Graphictreat social media content generation skills",
+    "longDescription": "Skills for generating social media content, starting with x-post-gen: high-engagement, educational X (Twitter) posts produced through a brief → draft → playbook critique → polish pipeline, with market-specific overlays for b2b-saas, indie, creator, crypto, and science audiences.",
+    "developerName": "Graphictreat",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Write an X post about what we just shipped."
+    ]
+  }
+}

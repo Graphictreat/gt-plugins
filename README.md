@@ -1,6 +1,6 @@
-# graphictreat/claude-plugins
+# graphictreat/gt-plugins
 
-Private Claude Code plugin marketplace for the Graphictreat team. Hosts the `gt-core` plugin (shared team-wide skills), `gt-engineering` (per-repo engineering workflow), and `gt-social` (social media content generation).
+Private plugin marketplace for the Graphictreat team, usable from both **Claude Code** and **OpenAI Codex** (Codex reads the Claude plugin format natively — `.claude-plugin/marketplace.json` and `.claude-plugin/plugin.json` are on its manifest discovery lists). Hosts the `gt-core` plugin (shared team-wide skills), `gt-engineering` (per-repo engineering workflow), and `gt-social` (social media content generation).
 
 This repo is **private**. Access requires membership in the `graphictreat` GitHub org.
 
@@ -14,6 +14,8 @@ This repo is **private**. Access requires membership in the `graphictreat` GitHu
 │   ├── gt-core/
 │   │   ├── .claude-plugin/
 │   │   │   └── plugin.json    Plugin manifest (name, version, author)
+│   │   ├── .codex-plugin/
+│   │   │   └── plugin.json    Codex overlay (display metadata for the /plugins browser)
 │   │   └── skills/
 │   │       ├── brainstorming/
 │   │       │   ├── SKILL.md
@@ -32,6 +34,8 @@ This repo is **private**. Access requires membership in the `graphictreat` GitHu
 │   │       └── stochastic-consensus/SKILL.md
 │   ├── gt-engineering/
 │   │   ├── .claude-plugin/
+│   │   │   └── plugin.json
+│   │   ├── .codex-plugin/
 │   │   │   └── plugin.json
 │   │   └── skills/
 │   │       ├── setup-gt-dev-skills/
@@ -53,6 +57,8 @@ This repo is **private**. Access requires membership in the `graphictreat` GitHu
 │   │       └── design-taste-frontend/SKILL.md
 │   └── gt-social/
 │       ├── .claude-plugin/
+│       │   └── plugin.json
+│       ├── .codex-plugin/
 │       │   └── plugin.json
 │       └── skills/
 │           └── x-post-gen/SKILL.md
@@ -110,7 +116,7 @@ You need a GitHub account that's been added to the `graphictreat` org with read 
 
 ```bash
 gh auth status
-gh repo view graphictreat/claude-plugins
+gh repo view graphictreat/gt-plugins
 ```
 
 If `gh` isn't set up, run `gh auth login` first.
@@ -120,13 +126,13 @@ If `gh` isn't set up, run `gh auth login` first.
 Inside Claude Code:
 
 ```
-/plugin marketplace add graphictreat/claude-plugins
+/plugin marketplace add graphictreat/gt-plugins
 ```
 
 Or from the shell:
 
 ```bash
-claude plugin marketplace add graphictreat/claude-plugins
+claude plugin marketplace add graphictreat/gt-plugins
 ```
 
 This clones the marketplace into `~/.claude/plugins/marketplaces/graphictreat/` using your `gh` credentials.
@@ -142,6 +148,30 @@ Inside Claude Code:
 ```
 
 Skills are now available in every Claude Code session on your machine, namespaced as `gt-core:<skill-name>`, `gt-engineering:<skill-name>`, and `gt-social:<skill-name>`.
+
+## Using with OpenAI Codex
+
+Codex's plugin system reads this repo's Claude plugin format directly — no conversion or separate packaging needed. Each plugin also ships a `.codex-plugin/plugin.json` overlay with display metadata (display name, descriptions, default prompts) for Codex's `/plugins` browser. From the shell:
+
+```bash
+codex plugin marketplace add graphictreat/gt-plugins
+codex plugin add gt-core@graphictreat
+codex plugin add gt-engineering@graphictreat
+codex plugin add gt-social@graphictreat
+```
+
+Or interactively: run `/plugins` inside Codex, switch to the `graphictreat` marketplace tab, and install from there. Invoke a skill by typing `$` (e.g. `$brainstorming`) or just describe the task and let description matching trigger it.
+
+To pull skill updates later:
+
+```bash
+codex plugin marketplace upgrade graphictreat
+```
+
+Notes:
+
+- Requires a recent Codex CLI (the plugin marketplace commands shipped in 2026 releases). Restart Codex after installing — skills load at startup.
+- The `disable-model-invocation: true` frontmatter on the slash-invoke-only `gt-engineering` skills is a Claude Code field; Codex may ignore it and auto-match those skills by description. Invoke them explicitly with `$` if in doubt.
 
 ## Verifying the install
 
@@ -190,10 +220,10 @@ The plugin stays installed; only that skill is hidden.
 
 ## How to add or modify a skill
 
-1. Clone this repo: `gh repo clone graphictreat/claude-plugins`
+1. Clone this repo: `gh repo clone graphictreat/gt-plugins`
 2. Add a new directory under `plugins/gt-core/skills/<your-skill>/` with a `SKILL.md` (frontmatter required: `name`, `description`).
-3. Test locally by pointing at your checkout: `/plugin marketplace add /absolute/path/to/claude-plugins` then `/plugin install gt-core`.
-4. Bump `version` in `plugins/gt-core/.claude-plugin/plugin.json`.
+3. Test locally by pointing at your checkout: `/plugin marketplace add /absolute/path/to/gt-plugins` then `/plugin install gt-core`.
+4. Bump `version` in `plugins/gt-core/.claude-plugin/plugin.json` **and** keep `plugins/gt-core/.codex-plugin/plugin.json` in sync (same version, and description if it changed).
 5. Open a PR. After merge, tag a release: `git tag v0.2.0 && git push --tags`.
 6. Teammates pull the update with `/plugin update gt-core`.
 
@@ -226,7 +256,7 @@ In any project repo, commit a `.claude/settings.json` like:
   "extraKnownMarketplaces": {
     "graphictreat": {
       "type": "github",
-      "repo": "graphictreat/claude-plugins",
+      "repo": "graphictreat/gt-plugins",
       "ref": "v0.1.0"
     }
   }
